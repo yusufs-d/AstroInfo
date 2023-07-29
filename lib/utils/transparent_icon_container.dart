@@ -1,0 +1,80 @@
+import 'package:flutter/material.dart';
+
+class TransparentIconContainer extends StatelessWidget {
+  const TransparentIconContainer(
+      {super.key,
+      required this.img,
+      required this.title,
+      required this.content});
+
+  final Widget img;
+  final Widget title;
+  final String content;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Stack(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 80),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 5,
+                decoration: BoxDecoration(
+                  image: const  DecorationImage(image: NetworkImage("https://cdn.mos.cms.futurecdn.net/HuGGeENt6kGyixe3hT9tnY.jpg"),fit: BoxFit.cover),
+              
+                  border: Border.all(
+                      color: const Color.fromARGB(255, 114, 114, 114),
+                      width: 2),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    title,
+                    Text(
+                      content,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 114, 114, 114).withOpacity(0.5),
+                          
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            side: const BorderSide(
+                              color: Color.fromARGB(255, 114, 114, 114),
+                            ),
+                            ),
+                        onPressed: () {},
+                        child: const Text(
+                          'Start to Discover >',
+                          style: TextStyle(color: Colors.white),
+                        )),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 2),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 8.3,
+                child: img,
+                
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

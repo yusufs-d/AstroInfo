@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "435308417933",
+    "project_id": "astroinfo-95c4f",
+    "storage_bucket": "astroinfo-95c4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435308417933:android:564fe177cb73ef86b623c4",
+        "android_client_info": {
+          "package_name": "com.example.astro_info"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435308417933-ke9jq639rsldf4suq2mlagg6st6tqigk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC8Qc18uxnqDe-5kQtd8i25yL2Q63VWKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "435308417933-ke9jq639rsldf4suq2mlagg6st6tqigk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "435308417933-8p3ck8poeldrj9q5cqpbvqfnbq6n7uah.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.astroInfo.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
