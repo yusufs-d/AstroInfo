@@ -2,6 +2,8 @@ import 'package:astro_info/model_lists/articles_list.dart';
 import 'package:astro_info/models/article.dart';
 import 'package:flutter/material.dart';
 
+
+
 class ArticlesPage extends StatefulWidget {
   const ArticlesPage({super.key});
 
@@ -32,6 +34,7 @@ class _ArticlesPageState extends State<ArticlesPage> {
 
   @override
   Widget build(BuildContext context) {
+    addArticleToFB();
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,

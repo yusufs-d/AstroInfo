@@ -1,5 +1,33 @@
 import 'package:astro_info/models/article.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 
+void addArticleToFB() async{
+final firebaseApp = Firebase.app();
+final rtdb = FirebaseDatabase.instanceFor(app: firebaseApp, databaseURL: 'https://astroinfo-95c4f-default-rtdb.europe-west1.firebasedatabase.app');
+for(var art in articlesList){
+DatabaseReference ref = rtdb.ref("Articles");
+DatabaseReference objectListRef = ref.push();
+  objectListRef.set({
+      "title": art.title,
+      "subtitle": art.subtitle,
+      "content": art.content,
+      "date": DateTime.now().toString(),
+      "numberOfReaders": 0,
+      "photo": art.numberOfReaders
+  
+});
+  
+}
+print("Added!");
+  }
+
+void readArticleFromFB(){
+final firebaseApp = Firebase.app();
+final rtdb = FirebaseDatabase.instanceFor(app: firebaseApp, databaseURL: 'https://astroinfo-95c4f-default-rtdb.europe-west1.firebasedatabase.app');
+DatabaseReference ref = rtdb.ref("Articles").child("Helix Nebula");
+
+}
 List<Article> articlesList = [
   Article(
       title: "Helix Nebula",

@@ -1,4 +1,45 @@
 import 'package:astro_info/models/object.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+void addObjectToFB() async{
+final firebaseApp = Firebase.app();
+final rtdb = FirebaseDatabase.instanceFor(app: firebaseApp, databaseURL: 'https://astroinfo-95c4f-default-rtdb.europe-west1.firebasedatabase.app');
+for(var obj in objectList){
+  DatabaseReference ref = rtdb.ref("Objects");
+DatabaseReference objectListRef = ref.push();
+  objectListRef.set({
+  "name": obj.name,
+  "photo": obj.photo,
+  "subtitle": obj.subtitle,
+  "category": obj.category.toString(),
+  "content": obj.content,
+  "numberOfSatellites": obj.numberOfSatellites,
+  "mass": obj.mass,
+  "surfaceArea": obj.surfaceArea,
+  "radius": obj.radius,
+  "temperature": obj.radius,
+  
+});
+  
+}
+
+print("Added!");
+  }
+
+void readObjectFromFb() async{
+  final firebaseApp = Firebase.app();
+  final rtdb = FirebaseDatabase.instanceFor(app: firebaseApp, databaseURL: 'https://astroinfo-95c4f-default-rtdb.europe-west1.firebasedatabase.app');
+  DatabaseReference ref = rtdb.ref("Objects");
+  ref.onChildAdded.listen((DatabaseEvent event) {
+    for(final child in event.snapshot.children){
+      print(child.value);
+    }
+
+});
+
+// Print the data of the snapshot
+}
 
 final List<Object> objectList = [
 const Object(

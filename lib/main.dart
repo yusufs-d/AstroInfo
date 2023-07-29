@@ -5,12 +5,21 @@ import 'package:flutter/material.dart';
 
 
 
-void main() {
+void main() async{
+
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(
     MaterialApp(
       theme: ThemeData(useMaterial3: true),
       home: const LayoutWidget(),
     )
   );
+
+
+
+
 }

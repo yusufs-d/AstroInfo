@@ -1,5 +1,8 @@
+import 'package:astro_info/model_lists/articles_list.dart';
 import 'package:astro_info/utils/category_list.dart';
 import 'package:astro_info/model_lists/objects_list.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:astro_info/models/object.dart';
@@ -14,6 +17,9 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
+  
+
+
   int _tabIndex = 0;
   List<Object> objectsToShow = objectList;
   List<String> category_tags = [
@@ -27,6 +33,7 @@ class _ExplorePageState extends State<ExplorePage> {
   ];
   @override
   Widget build(BuildContext context) {
+    readObjectFromFb();
     List<Object> selectCategory(String categoryName) {
       return objectList
           .where((object) => object.category.name == categoryName)
