@@ -31,14 +31,11 @@ void readObjectFromFb() async{
   final firebaseApp = Firebase.app();
   final rtdb = FirebaseDatabase.instanceFor(app: firebaseApp, databaseURL: 'https://astroinfo-95c4f-default-rtdb.europe-west1.firebasedatabase.app');
   DatabaseReference ref = rtdb.ref("Objects");
-  ref.onChildAdded.listen((DatabaseEvent event) {
-    for(final child in event.snapshot.children){
-      print(child.value);
-    }
-
-});
-
-// Print the data of the snapshot
+  ref.onValue.listen((DatabaseEvent event) { 
+    final data = event.snapshot.value;
+    print(data);
+  });
+  
 }
 
 final List<Object> objectList = [

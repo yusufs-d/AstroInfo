@@ -34,8 +34,8 @@ class _HomePageState extends State<HomePage> {
             children: [
               Expanded(
                 child: TransparentIconContainer(
-                  img: Image.network(
-                      "https://static.vecteezy.com/system/resources/previews/011/459/608/original/universe-planet-icon-png.png"),
+                  img: Image.asset(
+                      "images/planets/planet_icon.webp"),
                   title: AnimatedDigitWidget(
                     value: 8,
                     textStyle: const TextStyle(
@@ -48,8 +48,8 @@ class _HomePageState extends State<HomePage> {
               ),
               Expanded(
                 child: TransparentIconContainer(
-                  img: Image.network(
-                      "https://cdn-icons-png.flaticon.com/512/3381/3381895.png"),
+                  img: Image.asset(
+                      "images/planets/article_icon.png"),
                   title: AnimatedDigitWidget(
                     value: 28,
                     textStyle: const TextStyle(
@@ -86,8 +86,8 @@ class _HomePageState extends State<HomePage> {
                   child: ImageTextContainer(
                       containerWidth: w,
                       containerHeight: 280,
-                      title: "Test",
-                      subtitle: "Test",
+                      title: "Helix Nebula",
+                      subtitle: "Is it future of our Sun?",
                       imagePath:
                           "https://cdn.spacetelescope.org/archives/images/wallpaper4/opo0432d.jpg")),
             ],

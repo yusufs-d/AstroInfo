@@ -21,6 +21,7 @@ class RectangleImageContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){},
+      splashColor: Colors.white,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 6),
         width: containerWidth,
@@ -35,10 +36,13 @@ class RectangleImageContainer extends StatelessWidget {
           children: [
             Expanded(
               flex: 40,
-              child: Container(
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(14)),
-                child: image,
+              child: Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(14)),
+                  child: image,
+                ),
               ),
             ),
             Expanded(
@@ -82,7 +86,6 @@ class RectangleImageContainer extends StatelessWidget {
           ],
         ),
       ),
-      splashColor: Colors.white,
     );
   }
 }
