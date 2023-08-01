@@ -26,7 +26,7 @@ class TransparentIconContainer extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 5,
                 decoration: BoxDecoration(
-                  image: const  DecorationImage(image: NetworkImage("https://cdn.mos.cms.futurecdn.net/HuGGeENt6kGyixe3hT9tnY.jpg"),fit: BoxFit.cover),
+                  image: const  DecorationImage(image: AssetImage("images/planets/background.jpeg"),fit: BoxFit.cover),
               
                   border: Border.all(
                       color: const Color.fromARGB(255, 114, 114, 114),

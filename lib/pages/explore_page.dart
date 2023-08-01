@@ -51,21 +51,6 @@ class _ExplorePageState extends State<ExplorePage> {
       "Neutron Stars"
     ];
 
-    final planets =
-        objectList.where((object) => object.category.name == "planet").toList();
-    final stars =
-        objectList.where((object) => object.category.name == "star").toList();
-    final nebulas =
-        objectList.where((object) => object.category.name == "nebula").toList();
-    final galaxies =
-        objectList.where((object) => object.category.name == "galaxy").toList();
-    final blackHoles = objectList
-        .where((object) => object.category.name == "blackHole")
-        .toList();
-    final neutronStars = objectList
-        .where((object) => object.category.name == "neutronStar")
-        .toList();
-
     final double w = MediaQuery.of(context).size.width;
     return Container(
       width: MediaQuery.of(context).size.width,

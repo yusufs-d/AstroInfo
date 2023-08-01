@@ -38,27 +38,33 @@ class ImageTextContainer extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Row(
-                children: [
-                  Text(
-                    "Helix Nebula",
-                    style: GoogleFonts.lato(
-                        fontSize: 30, color: Colors.white.withOpacity(0.8)),
-                    textAlign: TextAlign.left,
-                  ),
-                  const Icon(Icons.arrow_forward_ios_sharp,color: Colors.white,size: 20,),
-
-                ],
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: Row(
+                  children: [
+                    Text(
+                      title,
+                      style: GoogleFonts.lato(
+                          fontSize: 30, color: Colors.white.withOpacity(0.8)),
+                      textAlign: TextAlign.left,
+                    ),
+                    const Icon(Icons.arrow_forward_ios_sharp,color: Colors.white,size: 20,),
+              
+                  ],
+                ),
               ),
-              Row(
-                children: [
-                  Text(
-                    "Is it future of the our Sun?",
-                    style: GoogleFonts.lato(
-                        fontSize: 20, color: Colors.white.withOpacity(0.8)),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(left: 8, top: 2, bottom: 4),
+                child: Row(
+                  children: [
+                    Text(
+                      subtitle,
+                      style: GoogleFonts.lato(
+                          fontSize: 20, color: Colors.white.withOpacity(0.8)),
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
