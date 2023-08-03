@@ -14,7 +14,6 @@ class TransparentIconContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -26,41 +25,58 @@ class TransparentIconContainer extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 5,
                 decoration: BoxDecoration(
-                  image: const  DecorationImage(image: AssetImage("images/planets/background.jpeg"),fit: BoxFit.cover),
-              
+                  image: const DecorationImage(
+                      image: AssetImage("images/backgrounds/background.jpeg"),
+                      fit: BoxFit.cover),
                   border: Border.all(
                       color: const Color.fromARGB(255, 114, 114, 114),
                       width: 2),
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    title,
-                    Text(
-                      content,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                    Expanded(
+                        child: SizedBox(
+                      height: 10,
+                    )),
+                    Expanded(child: title),
+                    Expanded(
+                      child: Text(
+                        content,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 114, 114, 114).withOpacity(0.5),
-                          
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            side: const BorderSide(
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 114, 114, 114)
+                              .withOpacity(0.4),
+                          border: const Border(
+                            top: BorderSide(
                               color: Color.fromARGB(255, 114, 114, 114),
                             ),
+                          ),
+                        ),
+                        child:
+                           const InkWell(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Start to discover",
+                                  style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),
+                                ),
+                                Icon(Icons.arrow_forward_ios, color: Colors.white,size: 16,)
+                              ],
                             ),
-                        onPressed: () {},
-                        child: const Text(
-                          'Start to Discover >',
-                          style: TextStyle(color: Colors.white),
-                        )),
+                          ),
+                        
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -69,7 +85,6 @@ class TransparentIconContainer extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 8.3,
                 child: img,
-                
               ),
             ],
           ),

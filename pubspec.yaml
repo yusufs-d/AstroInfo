@@ -43,6 +43,7 @@ dependencies:
   firebase_database: ^10.2.4
   animated_text_kit: ^4.2.2
   firebase_auth: ^4.7.2
+  cloud_firestore: ^4.8.4
 
 
 dev_dependencies:
@@ -71,6 +72,10 @@ flutter:
   assets:
     - images/
     - images/planets/
+    - images/stars/
+    - images/icons/
+    - images/backgrounds/
+    - images/nebulas/
  
 
   # An image asset can refer to one or more resolution-specific "variants", see
