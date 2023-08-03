@@ -46,7 +46,7 @@ class LoginScreenState extends State<LoginScreen> {
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: const AssetImage("images/planets/background.jpeg"),
+            image: const AssetImage("images/backgrounds/background.jpeg"),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
                 Colors.black.withOpacity(0.4), BlendMode.dstATop),

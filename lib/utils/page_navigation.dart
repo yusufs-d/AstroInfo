@@ -38,22 +38,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          TextButton(
-            onPressed: signOut,
-            child: const Row(
-              children: [
-                Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                Text(
-                  "Sign Out",
-                  style: TextStyle(color: Colors.white, fontSize: 15),
-                ),
-              ],
-            ),
-          ),
+          
           TextButton(
             onPressed: () {
               Navigator.push(

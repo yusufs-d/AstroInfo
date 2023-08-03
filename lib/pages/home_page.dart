@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: TransparentIconContainer(
                   img: Image.asset(
-                      "images/planets/planet_icon.webp"),
+                      "images/icons/planet_icon.webp"),
                   title: AnimatedDigitWidget(
                     value: 8,
                     textStyle: const TextStyle(
@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: TransparentIconContainer(
                   img: Image.asset(
-                      "images/planets/article_icon.png"),
+                      "images/icons/article_icon.png"),
                   title: AnimatedDigitWidget(
                     value: 28,
                     textStyle: const TextStyle(

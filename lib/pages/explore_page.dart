@@ -1,11 +1,7 @@
-import 'package:astro_info/model_lists/articles_list.dart';
-import 'package:astro_info/utils/category_list.dart';
-import 'package:astro_info/model_lists/objects_list.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:astro_info/pages/object_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:astro_info/models/object.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -17,11 +13,28 @@ class ExplorePage extends StatefulWidget {
 }
 
 class _ExplorePageState extends State<ExplorePage> {
-  
+  var collection = FirebaseFirestore.instance.collection("SpaceObjects");
+  static late List<Map<String, dynamic>> items;
+  List<Map<String, dynamic>> objectsToShow = [];
 
+  _readObjectsFromFB() async {
+    List<Map<String, dynamic>> tempList = [];
+
+    var data = await collection.get();
+    data.docs.forEach((element) {
+      tempList.add(element.data());
+    });
+
+    setState(() {
+      items = tempList;
+      if (objectsToShow.isEmpty) {
+        objectsToShow = tempList;
+      }
+    });
+  }
 
   int _tabIndex = 0;
-  List<Object> objectsToShow = objectList;
+
   List<String> category_tags = [
     "all",
     "planet",
@@ -33,10 +46,10 @@ class _ExplorePageState extends State<ExplorePage> {
   ];
   @override
   Widget build(BuildContext context) {
-    readObjectFromFb();
-    List<Object> selectCategory(String categoryName) {
-      return objectList
-          .where((object) => object.category.name == categoryName)
+    _readObjectsFromFB();
+    List<Map<String, dynamic>> selectCategory(String categoryName) {
+      return items
+          .where((object) => object["category"] == categoryName)
           .toList();
     }
 
@@ -72,7 +85,7 @@ class _ExplorePageState extends State<ExplorePage> {
                           setState(() {
                             _tabIndex = index;
                             if (category_tags[index] == "all") {
-                              objectsToShow = objectList;
+                              objectsToShow = items;
                             } else {
                               objectsToShow =
                                   selectCategory(category_tags[index]);
@@ -115,14 +128,26 @@ class _ExplorePageState extends State<ExplorePage> {
                   ),
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ObjectPage(
+                              name: objectsToShow[index]["name"],
+                              subtitle: objectsToShow[index]["subtitle"],
+                              content: objectsToShow[index]["content"],
+                              photo: objectsToShow[index]["photo"],
+                            ),
+                          ),
+                        );
+                      },
                       child: Container(
                         padding: const EdgeInsets.all(8),
                         child: Column(
                           children: [
                             Expanded(
                               flex: 90,
-                              child: Image.asset(objectsToShow[index].photo),
+                              child: Image.asset(objectsToShow[index]["photo"]),
                             ),
                             const SizedBox(
                               height: 10,
@@ -130,7 +155,7 @@ class _ExplorePageState extends State<ExplorePage> {
                             Expanded(
                               flex: 10,
                               child: Text(
-                                objectsToShow[index].name,
+                                objectsToShow[index]["name"],
                                 style: GoogleFonts.lato(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),

@@ -52,7 +52,7 @@ class ProfileScreenState extends State<ProfileScreen> {
         ),
         RectangleImageContainer(
           containerWidth: MediaQuery.of(context).size.width,
-          containerHeight: 150,
+          containerHeight: 200,
           title: "Favourite Objects",
           subtitle: "You have 3 favourite objects",
           image: Image.network(
@@ -63,7 +63,7 @@ class ProfileScreenState extends State<ProfileScreen> {
         ),
         RectangleImageContainer(
           containerWidth: MediaQuery.of(context).size.width,
-          containerHeight: 150,
+          containerHeight: 200,
           title: "Favourite Articles",
           subtitle: "You have 7 favourite articles",
           image: Image.network(
