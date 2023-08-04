@@ -48,10 +48,9 @@ class RectangleImageContainer extends StatelessWidget {
             Expanded(
               flex: 60,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: Row(
+                
+                    Row(
                       children: [
                         Text(
                           title,
@@ -68,9 +67,8 @@ class RectangleImageContainer extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                  Expanded(
-                    child: Text(
+                  
+                    Text(
                       subtitle,
                       softWrap: true,
                       style: GoogleFonts.lato(
@@ -79,7 +77,7 @@ class RectangleImageContainer extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
+                  
                 ],
               ),
             ),
