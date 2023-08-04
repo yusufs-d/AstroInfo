@@ -102,6 +102,8 @@ class _ArticlesPageState extends State<ArticlesPage> {
                                 subtitle: articles[index]["subtitle"],
                                 content: articles[index]["content"],
                                 photo: articles[index]["photo"],
+                                date: articles[index]["date"],
+                                numberOfReaders: articles[index]["numberOfReaders"].toString(),
                               ),
                             ),
                           );
