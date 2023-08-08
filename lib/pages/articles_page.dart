@@ -15,13 +15,16 @@ class _ArticlesPageState extends State<ArticlesPage> {
   var collection = FirebaseFirestore.instance.collection("Articles");
   static late List<Map<String, dynamic>> items;
   List<Map<String, dynamic>> articles = [];
+  List<String> idList = [];
   static bool isLoaded = false;
   _readArticlesFromFB() async {
     List<Map<String, dynamic>> tempList = [];
+    
 
     var data = await collection.get();
     data.docs.forEach((element) {
       tempList.add(element.data());
+      idList.add(element.reference.id);
     });
 
     setState(() {
@@ -34,6 +37,11 @@ class _ArticlesPageState extends State<ArticlesPage> {
   }
 
   final _searchController = TextEditingController();
+  @override
+  void dispose() {
+    
+    super.dispose();
+  }
   void searchArticle(String query) {
     var result = items.where((item) {
       final articleTitle = item["title"].toLowerCase();
@@ -98,12 +106,13 @@ class _ArticlesPageState extends State<ArticlesPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ArticlePage(
+                                id: idList[index],
                                 title: articles[index]["title"],
                                 subtitle: articles[index]["subtitle"],
                                 content: articles[index]["content"],
                                 photo: articles[index]["photo"],
                                 date: articles[index]["date"],
-                                numberOfReaders: articles[index]["numberOfReaders"].toString(),
+                                numberOfReaders: articles[index]["numberOfReaders"],
                               ),
                             ),
                           );

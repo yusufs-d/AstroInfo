@@ -1,6 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class SignUpColumn extends StatelessWidget {
@@ -17,17 +16,29 @@ class SignUpColumn extends StatelessWidget {
         email: _signUpEmailController.text.trim(),
         password: _signUpPasswordController.text.trim(),
       );
-      final firebaseApp = Firebase.app();
-      final rtdb = FirebaseDatabase.instanceFor(
-          app: firebaseApp,
-          databaseURL:
-              'https://astroinfo-95c4f-default-rtdb.europe-west1.firebasedatabase.app');
-      DatabaseReference ref = rtdb.ref("Users");
-      DatabaseReference uniqueUserRef = ref.push();
-      uniqueUserRef.set({
-        "Real Name": _realNameController.text.trim(),
-        "User Name": _userNameController.text.trim(),
-        "Email": _signUpEmailController.text.trim(),
+      CollectionReference users = FirebaseFirestore.instance.collection("Users");
+      CollectionReference objects = FirebaseFirestore.instance.collection("SpaceObjects");
+      CollectionReference articles = FirebaseFirestore.instance.collection("Articles");
+    
+      final _snapshot_for_articles = await articles.count().get();
+      final _snapshot_for_objects = await objects.count().get();
+
+      final objects_count = _snapshot_for_objects.count;
+      final articles_count = _snapshot_for_articles.count;
+
+
+      
+      users.add({
+        "email":_signUpEmailController.text.trim(),
+        "username":_userNameController.text.trim(),
+        "realname":_realNameController.text.trim(),
+        "numberOfObjectsToExplore": objects_count,
+        "numberOfArticlesToRead": articles_count,
+        "favouriteObjects":[],
+        "favouriteArticles":[],
+        "clickedObjects":[],
+        "clickedArticles":[],
+
       });
     }
 

@@ -9,6 +9,7 @@ class RectangleImageContainer extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.image,
+    required this.target,
   });
 
   final double containerWidth;
@@ -16,12 +17,13 @@ class RectangleImageContainer extends StatelessWidget {
   final String title;
   final String subtitle;
   final Widget image;
+  final Widget target;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){},
-      splashColor: Colors.white,
+      splashColor: Colors.black,
+      onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => target,),);},
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 6),
         width: containerWidth,
@@ -50,22 +52,25 @@ class RectangleImageContainer extends StatelessWidget {
               child: Column(
                 children: [
                 
-                    Row(
-                      children: [
-                        Text(
-                          title,
-                          style: GoogleFonts.lato(
-                            textStyle: const TextStyle(color: Colors.white),
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Row(
+                        children: [
+                          Text(
+                            title,
+                            style: GoogleFonts.lato(
+                              textStyle: const TextStyle(color: Colors.white),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        const Icon(
-                          Icons.arrow_forward_ios_sharp,
-                          color: Colors.white,
-                          size: 16,
-                        ),
-                      ],
+                          const Icon(
+                            Icons.arrow_forward_ios_sharp,
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                        ],
+                      ),
                     ),
                   
                     Text(

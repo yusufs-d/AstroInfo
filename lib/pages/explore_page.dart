@@ -44,8 +44,21 @@ class _ExplorePageState extends State<ExplorePage> {
     "blackHole",
     "neutronStar"
   ];
+  
   @override
   Widget build(BuildContext context) {
+    void test() async{
+    CollectionReference users = FirebaseFirestore.instance.collection("Users");
+      users.add({
+        "email":"aa",
+        "username":"bb",
+        "realname":"cc",
+        "numberOfObjectsToRead":  await FirebaseFirestore.instance.collection('SpaceObjects').snapshots().length,
+        "numberOfArticlesToRead":  await FirebaseFirestore.instance.collection('Articles').snapshots().length,
+        "favouriteObjects":[],
+        "favouriteArticles":[],
+      });}
+    
     _readObjectsFromFB();
     List<Map<String, dynamic>> selectCategory(String categoryName) {
       return items
@@ -53,7 +66,7 @@ class _ExplorePageState extends State<ExplorePage> {
           .toList();
     }
 
-    ;
+    
     List<String> categories = [
       "All",
       "Planets",

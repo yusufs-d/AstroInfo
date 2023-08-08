@@ -1,5 +1,5 @@
-import 'package:astro_info/utils/signInColumn.dart';
-import 'package:astro_info/utils/signUpColumn.dart';
+import 'package:astro_info/pages/login_screen/sign_in_column.dart';
+import 'package:astro_info/pages/login_screen/sign_up_column.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
