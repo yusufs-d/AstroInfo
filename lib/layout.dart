@@ -1,4 +1,4 @@
-import 'package:astro_info/pages/login_screen.dart';
+import 'package:astro_info/pages/login_screen/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:astro_info/utils/page_navigation.dart';

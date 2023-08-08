@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ArticlePage extends StatefulWidget {
   const ArticlePage({
     super.key,
+    required this.id,
     required this.title,
     required this.subtitle,
     required this.content,
@@ -11,12 +14,13 @@ class ArticlePage extends StatefulWidget {
     required this.numberOfReaders,
   });
 
+  final String id;
   final String title;
   final String subtitle;
   final String content;
   final String photo;
   final String date;
-  final String numberOfReaders;
+  final int numberOfReaders;
 
   @override
   State<StatefulWidget> createState() {
@@ -25,31 +29,96 @@ class ArticlePage extends StatefulWidget {
 }
 
 class ArticlePageState extends State<ArticlePage> {
-  Icon unStar = const Icon(Icons.star_border,
+  static Icon unStar = const Icon(Icons.star_border,
       size: 30, color: Color.fromARGB(255, 114, 114, 114));
-  Icon star =
-      const Icon(Icons.star, size: 30, color: Color.fromARGB(255, 114, 114, 114));
-  Icon currentIcon = const Icon(Icons.star_border,
+  Icon star = const Icon(Icons.star,
       size: 30, color: Color.fromARGB(255, 114, 114, 114));
-  void changeIcon() {
+  Icon currentIcon = unStar;
+  _checkIsClicked() async {
+    FirebaseFirestore.instance
+        .collection("Users")
+        .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+        .get()
+        .then((QuerySnapshot s) {
+      s.docs.forEach((element) {
+        var userID = element.reference.id;
+        var data = element.data() as Map<String, dynamic>;
+        var clickedList = data["clickedArticles"];
+        var favArticles = data["favouriteArticles"];
+        var numberOfArticlesToRead = data["numberOfArticlesToRead"];
+        if(favArticles.contains(widget.title))
+        {
+          setState(() {
+            currentIcon = star;
+          });
+          
+        }
+        if (!clickedList.contains(widget.title)) {
+          FirebaseFirestore.instance.collection("Users").doc(userID).update({
+            "clickedArticles": FieldValue.arrayUnion([widget.title]),
+            "numberOfArticlesToRead": numberOfArticlesToRead - 1
+          });
+          setState(() {
+            FirebaseFirestore.instance
+                .collection("Articles")
+                .doc(widget.id)
+                .update({
+              "numberOfReaders": widget.numberOfReaders + 1,
+            });
+          });
+        }
+      });
+    });
+  }
+
+
+  void addFavourite() {
     if (currentIcon == unStar) {
       setState(() {
         currentIcon = star;
       });
+
+      FirebaseFirestore.instance
+          .collection("Users")
+          .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+          .get()
+          .then((QuerySnapshot s) {
+        String userID = s.docs[0].reference.id;
+
+        List<String> favArticles = [widget.title];
+        FirebaseFirestore.instance
+            .collection("Users")
+            .doc(userID)
+            .update({"favouriteArticles": FieldValue.arrayUnion(favArticles)});
+      });
     } else {
       setState(() {
         currentIcon = unStar;
+      });
+      FirebaseFirestore.instance
+          .collection("Users")
+          .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+          .get()
+          .then((QuerySnapshot s) {
+        String userID = s.docs[0].reference.id;
+
+        List<String> favArticles = [widget.title];
+        FirebaseFirestore.instance
+            .collection("Users")
+            .doc(userID)
+            .update({"favouriteArticles": FieldValue.arrayRemove(favArticles)});
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    _checkIsClicked();
     return Scaffold(
       appBar: AppBar(
         actions: [
           TextButton(
-            onPressed: changeIcon,
+            onPressed: addFavourite,
             child: currentIcon,
           ),
         ],

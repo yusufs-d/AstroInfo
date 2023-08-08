@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ObjectPage extends StatefulWidget {
@@ -21,10 +23,80 @@ class ObjectPage extends StatefulWidget {
 }
 
 class ObjectPageState extends State<ObjectPage> {
+  _checkIsClicked() async {
+    FirebaseFirestore.instance
+        .collection("Users")
+        .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+        .get()
+        .then((QuerySnapshot s) {
+      s.docs.forEach((element) {
+        var userID = element.reference.id;
+        var data = element.data() as Map<String, dynamic>;
+        var clickedList = data["clickedObjects"];
+        var numberOfObjectsToExplore = data["numberOfObjectsToExplore"];
+        if (!clickedList.contains(widget.name)) {
+          FirebaseFirestore.instance.collection("Users").doc(userID).update(
+              {
+                "clickedObjects": FieldValue.arrayUnion([widget.name]),
+                "numberOfObjectsToExplore":numberOfObjectsToExplore-1
+              });
+          
+        }
+      });
+    });
+  }
+
+  static Icon unStar = const Icon(Icons.star_border,
+      size: 30, color: Color.fromARGB(255, 114, 114, 114));
+  Icon star = const Icon(Icons.star,
+      size: 30, color: Color.fromARGB(255, 114, 114, 114));
+  Icon currentIcon = unStar;
+ void addFavourite() {
+    if (currentIcon == unStar) {
+      setState(() {
+        currentIcon = star;
+      });
+
+      FirebaseFirestore.instance
+          .collection("Users")
+          .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+          .get()
+          .then((QuerySnapshot s) {
+        String userID = s.docs[0].reference.id;
+
+        List<String> favArticles = [widget.name];
+        FirebaseFirestore.instance
+            .collection("Users")
+            .doc(userID)
+            .update({"favouriteObjects": FieldValue.arrayUnion(favArticles)});
+      });
+    } else {
+      setState(() {
+        currentIcon = unStar;
+      });
+            FirebaseFirestore.instance
+          .collection("Users")
+          .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+          .get()
+          .then((QuerySnapshot s) {
+        
+        String userID = s.docs[0].reference.id;
+
+        List<String> favArticles = [widget.name];
+        FirebaseFirestore.instance
+            .collection("Users")
+            .doc(userID)
+            .update({"favouriteObjects": FieldValue.arrayRemove(favArticles)});
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    _checkIsClicked();
     return Scaffold(
       appBar: AppBar(
+        actions: [TextButton(onPressed: addFavourite, child: currentIcon)],
         iconTheme: const IconThemeData(
           color: Color.fromARGB(255, 114, 114, 114),
         ),
@@ -45,156 +117,195 @@ class ObjectPageState extends State<ObjectPage> {
               SizedBox(
                 height: 20,
               ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.line_weight,
-                    color: Colors.white.withOpacity(0.6),
-                    size: 20,
+              Padding(
+                padding: EdgeInsets.only(left: 100),
+                child: Column(children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.line_weight,
+                          color: Colors.white.withOpacity(0.6),
+                          size: 20,
+                        ),
+                        Text(
+                          " Mass: ",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                        Text(
+                          "23.33",
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 20),
+                        )
+                      ],
+                    ),
                   ),
-                  Text(
-                    "Mass: ",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.compare_arrows,
+                          color: Colors.white.withOpacity(0.6),
+                          size: 20,
+                        ),
+                        Text(
+                          " Distance: ",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                        Text(
+                          "1.5AU",
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 20),
+                        )
+                      ],
+                    ),
                   ),
-                  Text(
-                    "23.33",
-                    style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 20),
-                  )
-                ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.radio_button_on_sharp,
+                          color: Colors.white.withOpacity(0.6),
+                          size: 20,
+                        ),
+                        Text(
+                          " Radius: ",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                        Text(
+                          "43.3R",
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.thermostat,
+                          color: Colors.white.withOpacity(0.6),
+                          size: 20,
+                        ),
+                        Text(
+                          " Temperature: ",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                        Text(
+                          "23.33",
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.line_weight,
+                          color: Colors.white.withOpacity(0.6),
+                          size: 20,
+                        ),
+                        Text(
+                          " Volume: ",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                        Text(
+                          "23.33",
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.scatter_plot_outlined,
+                          color: Colors.white.withOpacity(0.6),
+                          size: 20,
+                        ),
+                        Text(
+                          " Number of Moons: ",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                        Text(
+                          "43.3R",
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.timelapse,
+                          color: Colors.white.withOpacity(0.6),
+                          size: 20,
+                        ),
+                        Text(
+                          " Period: ",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        ),
+                        Text(
+                          "43.3R",
+                          style: TextStyle(
+                              color: Colors.white.withOpacity(0.6),
+                              fontSize: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                ]),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    Icons.compare_arrows,
-                    color: Colors.white.withOpacity(0.6),
-                    size: 20,
-                  ),
-                  Text(
-                    "Distance: ",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                  Text(
-                    "1.5AU",
-                    style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 20),
-                  )
-                ],
+              SizedBox(
+                height: 20,
               ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.radio_button_on_sharp,
-                    color: Colors.white.withOpacity(0.6),
-                    size: 20,
-                  ),
-                  Text(
-                    "Radius: ",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                  Text(
-                    "43.3R",
-                    style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 20),
-                  )
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    Icons.thermostat,
-                    color: Colors.white.withOpacity(0.6),
-                    size: 20,
-                  ),
-                  Text(
-                    "Temperature: ",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                  Text(
-                    "23.33",
-                    style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 20),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.line_weight,
-                    color: Colors.white.withOpacity(0.6),
-                    size: 20,
-                  ),
-                  Text(
-                    "Volume: ",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                  Text(
-                    "23.33",
-                    style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 20),
-                  )
-                ],
-              ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    Icons.radio_button_on_sharp,
-                    color: Colors.white.withOpacity(0.6),
-                    size: 20,
-                  ),
-                  Text(
-                    "Number of Moons: ",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                  Text(
-                    "43.3R",
-                    style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 20),
-                  )
-                ],
-              ),
-                          Row(
-                children: [
-                  Icon(
-                    Icons.radio_button_on_sharp,
-                    color: Colors.white.withOpacity(0.6),
-                    size: 20,
-                  ),
-                  Text(
-                    "Period: ",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                  Text(
-                    "43.3R",
-                    style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 20),
-                  )
-                ],
-              ),
-              SizedBox(height: 20,),
-               Container(
+              Container(
                   width: MediaQuery.of(context).size.width - 30,
                   child: Text(
                     widget.content,
                     style: const TextStyle(
-                        color: Colors.white, fontSize: 14, letterSpacing: 1.5),
+                        color: Colors.white, fontSize: 16, letterSpacing: 1.5),
                   )),
             ],
           ),

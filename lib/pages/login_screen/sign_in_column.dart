@@ -1,9 +1,7 @@
-import 'package:astro_info/utils/page_navigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
+import '../../main.dart';
 
 class SignInColumn extends StatelessWidget {
   SignInColumn({super.key});

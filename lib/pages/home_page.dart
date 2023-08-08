@@ -1,10 +1,16 @@
 import 'package:astro_info/utils/image_text_container.dart';
 import 'package:astro_info/utils/rectangle_image_container.dart';
 import 'package:astro_info/utils/transparent_icon_container.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_digit/animated_digit.dart';
 
+import 'fav_objects_screen.dart';
+
 class HomePage extends StatefulWidget {
+  
+
   const HomePage({super.key});
 
   @override
@@ -14,8 +20,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+int objectCount = 0;
+  int articleCount = 0;
+  _getUserData() async{
+        await FirebaseFirestore.instance
+        .collection("Users")
+        .where('email', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+        .get()
+        .then((QuerySnapshot s) {
+      s.docs.forEach((element) {
+        var data = element.data() as Map<String,dynamic>;
+        setState(() {
+        objectCount = data["numberOfObjectsToExplore"];
+        articleCount = data["numberOfArticlesToRead"];
+        });
+
+          
+
+
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    _getUserData();
+
     final double w = MediaQuery.of(context).size.width;
     final double h = MediaQuery.of(context).size.height;
     return Container(
@@ -34,10 +63,9 @@ class _HomePageState extends State<HomePage> {
             children: [
               Expanded(
                 child: TransparentIconContainer(
-                  img: Image.asset(
-                      "images/icons/planet_icon.webp"),
+                  img: Image.asset("images/icons/planet_icon.webp"),
                   title: AnimatedDigitWidget(
-                    value: 8,
+                    value: objectCount,
                     textStyle: const TextStyle(
                       color: Colors.white,
                       fontSize: 30,
@@ -48,10 +76,9 @@ class _HomePageState extends State<HomePage> {
               ),
               Expanded(
                 child: TransparentIconContainer(
-                  img: Image.asset(
-                      "images/icons/article_icon.png"),
+                  img: Image.asset("images/icons/article_icon.png"),
                   title: AnimatedDigitWidget(
-                    value: 28,
+                    value: articleCount,
                     textStyle: const TextStyle(
                       color: Colors.white,
                       fontSize: 30,
@@ -74,25 +101,26 @@ class _HomePageState extends State<HomePage> {
                 title: "MARS",
                 subtitle: "Gorgeous Red Planet of the Solar System",
                 image: Image.asset("images/planets/mars.png"),
+                target: const FavObjectsScreen(),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 10,
           ),
           Row(
             children: [
               Expanded(
-                  child: ImageTextContainer(
-                      containerWidth: w,
-                      containerHeight: 280,
-                      title: "Helix Nebula",
-                      subtitle: "Is it future of our Sun?",
-                      imagePath:
-                          "https://cdn.spacetelescope.org/archives/images/wallpaper4/opo0432d.jpg")),
+                child: ImageTextContainer(
+                    containerWidth: w,
+                    containerHeight: 280,
+                    title: "Helix Nebula",
+                    subtitle: "Is it future of our Sun?",
+                    imagePath:
+                        "https://cdn.spacetelescope.org/archives/images/wallpaper4/opo0432d.jpg"),
+              ),
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
         ],
       ),
     );
