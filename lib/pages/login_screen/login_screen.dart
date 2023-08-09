@@ -15,28 +15,26 @@ class LoginScreenState extends State<LoginScreen> {
   String _screenTitle = "Welcome to ";
   String _textButtonText = "Didn't you sign up yet ?";
 
-  double _innerContainerSize = 2.5;
-
-  @override
-  Widget build(BuildContext context) {
-
-
-        void changeCurrentColumn() {
+          void changeCurrentColumn() {
       setState(() {
         if (_screenTitle == "Welcome to ") {
           _screenTitle = "Sign Up to ";
           _textButtonText = "Do you have an account already ?";
-          _innerContainerSize = 1.8;
           _currentColumn = SignUpColumn();
         } else {
           _screenTitle = "Welcome to ";
-          _innerContainerSize = 2.5;
           _textButtonText = "Didn't you sign up yet ?";
           _currentColumn = SignInColumn();
           
         }
       });
     }
+
+  @override
+  Widget build(BuildContext context) {
+
+
+
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -75,9 +73,9 @@ class LoginScreenState extends State<LoginScreen> {
             Stack(
               children: [
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 85),
+                  margin: const EdgeInsets.symmetric(vertical: 85,horizontal: 10),
                   width: MediaQuery.of(context).size.width / 1.3,
-                  height: MediaQuery.of(context).size.height / _innerContainerSize,
+                  height: _screenTitle=="Welcome to " ? 380 : 500,
                   decoration: BoxDecoration(
                       border: Border.all(
                         color: const Color.fromARGB(255, 114, 114, 114),
@@ -106,10 +104,11 @@ class LoginScreenState extends State<LoginScreen> {
                   margin:
                       const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
                   width: 166,
-                  height: 166,
-                  child: Image.asset(
-                    "images/planets/galaxy.png",
+                  height: 200,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(image: AssetImage("images/planets/hel.png"),fit: BoxFit.cover)
                   ),
+                 
                 ),
               ],
             ),
