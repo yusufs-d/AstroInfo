@@ -44,6 +44,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   firebase_auth: ^4.7.2
   cloud_firestore: ^4.8.4
+  flash: ^3.0.5+1
 
 
 dev_dependencies:

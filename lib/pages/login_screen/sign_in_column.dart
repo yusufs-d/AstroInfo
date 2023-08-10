@@ -1,5 +1,7 @@
+import 'package:astro_info/utils/error_message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../main.dart';
 
@@ -23,9 +25,18 @@ class SignInColumn extends StatelessWidget {
           password: _signInPasswordController.text.trim(),
         );
       } on FirebaseAuthException catch (e) {
-        print(e);
+        if (e.code == "user-not-found" || e.code == "wrong-password" || e.code == "invalid-email") {
+          FocusScope.of(context).unfocus();
+
+          ScaffoldMessenger.of(context).showSnackBar(
+
+            ErrorMessage("Your email or password is wrong!")
+          );
+
+          
+        }
       }
-      navigatorKey.currentState!.popUntil((route)=> route.isFirst);
+      navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }
 
     return Column(
@@ -62,21 +73,24 @@ class SignInColumn extends StatelessWidget {
         const SizedBox(
           height: 12,
         ),
-        ElevatedButton(
-          onPressed: signIn,
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
-              const Color.fromARGB(255, 114, 114, 114).withOpacity(0.4),
+        Padding(
+          padding: const EdgeInsets.only(top: 12, right: 10, left: 10),
+          child: ElevatedButton(
+            onPressed: signIn,
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(
+                const Color.fromARGB(255, 114, 114, 114).withOpacity(0.4),
+              ),
+              padding: MaterialStateProperty.all(
+                  const EdgeInsets.symmetric(horizontal: 100, vertical: 8)),
+              textStyle: MaterialStateProperty.all(
+                const TextStyle(fontSize: 20),
+              ),
             ),
-            padding: MaterialStateProperty.all(
-                const EdgeInsets.symmetric(horizontal: 120, vertical: 10)),
-            textStyle: MaterialStateProperty.all(
-              const TextStyle(fontSize: 20),
+            child: Text(
+              'Sign in',
+              style: TextStyle(color: Colors.white.withOpacity(0.9)),
             ),
-          ),
-          child: Text(
-            'Sign in',
-            style: TextStyle(color: Colors.white.withOpacity(0.9)),
           ),
         ),
       ],
