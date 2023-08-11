@@ -105,8 +105,8 @@ class LoginScreenState extends State<LoginScreen> {
                       const EdgeInsets.symmetric(horizontal: 80, vertical: 10),
                   width: 166,
                   height: 200,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage("images/planets/hel.png"),fit: BoxFit.cover)
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(image: AssetImage("images/nebulas/helix.png"),fit: BoxFit.cover)
                   ),
                  
                 ),

@@ -37,7 +37,7 @@ class _CategoryListState extends State<CategoryList>{
             color: Color.fromARGB(255, 114, 114, 114),
             width: 2
           ),
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(40),
         ),
         child:  const Column(
           mainAxisAlignment: MainAxisAlignment.center,

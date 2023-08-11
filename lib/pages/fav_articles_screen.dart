@@ -85,12 +85,11 @@ class FavArticlesScreenState extends State<FavArticlesScreen> {
         height: MediaQuery.of(context).size.height,
         color: Colors.black,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
-              flex: 10,
+              flex: 9,
               child: Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   style: const TextStyle(color: Colors.white),
                   controller: _searchController,
@@ -111,11 +110,8 @@ class FavArticlesScreenState extends State<FavArticlesScreen> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
             Expanded(
-              flex: 90,
+              flex: 91,
               child: isLoaded
                   ? ListView.builder(
                       itemCount: articles.length,
@@ -133,7 +129,7 @@ class FavArticlesScreenState extends State<FavArticlesScreen> {
                                   photo: articles[index]["photo"],
                                   date: articles[index]["date"],
                                   numberOfReaders: articles[index]
-                                          ["numberOfReaders"],
+                                      ["numberOfReaders"],
                                 ),
                               ),
                             );

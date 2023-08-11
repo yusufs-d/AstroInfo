@@ -9,6 +9,7 @@ class ImageTextContainer extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.imagePath,
+    required this.target,
   });
 
   final double containerWidth;
@@ -16,11 +17,13 @@ class ImageTextContainer extends StatelessWidget {
   final String title;
   final String subtitle;
   final String imagePath;
+  final Widget target;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => target,),);
       },
       child: Container(
         margin:  const EdgeInsets.symmetric(horizontal: 8,vertical: 5),
@@ -28,10 +31,11 @@ class ImageTextContainer extends StatelessWidget {
         height: containerHeight,
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: NetworkImage(imagePath), fit: BoxFit.cover),
+              image: NetworkImage(imagePath), fit: BoxFit.cover,colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.5), BlendMode.dstATop),),
           border: Border.all(
               color: const Color.fromARGB(255, 114, 114, 114), width: 2),
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(40),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),

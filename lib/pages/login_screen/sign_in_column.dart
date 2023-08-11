@@ -1,7 +1,6 @@
 import 'package:astro_info/utils/error_message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../main.dart';
 
@@ -25,7 +24,11 @@ class SignInColumn extends StatelessWidget {
           password: _signInPasswordController.text.trim(),
         );
       } on FirebaseAuthException catch (e) {
-        if (e.code == "user-not-found" || e.code == "wrong-password" || e.code == "invalid-email") {
+        if (e.code == "user-not-found" || 
+            e.code == "wrong-password" || 
+            e.code == "invalid-email"  || 
+            _signInEmailController.text.isEmpty || 
+            _signInPasswordController.text.isEmpty) {
           FocusScope.of(context).unfocus();
 
           ScaffoldMessenger.of(context).showSnackBar(

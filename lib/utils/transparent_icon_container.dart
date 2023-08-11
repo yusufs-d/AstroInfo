@@ -1,15 +1,20 @@
+import 'package:astro_info/utils/page_navigation.dart';
 import 'package:flutter/material.dart';
 
 class TransparentIconContainer extends StatelessWidget {
+
   const TransparentIconContainer(
       {super.key,
       required this.img,
       required this.title,
-      required this.content});
+      required this.content,
+      required this.target,
+      });
 
   final Widget img;
   final Widget title;
   final String content;
+  final int target;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +36,11 @@ class TransparentIconContainer extends StatelessWidget {
                   border: Border.all(
                       color: const Color.fromARGB(255, 114, 114, 114),
                       width: 2),
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(40),
                 ),
                 child: Column(
                   children: [
-                    Expanded(
+                    const Expanded(
                         child: SizedBox(
                       height: 10,
                     )),
@@ -51,30 +56,38 @@ class TransparentIconContainer extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 114, 114, 114)
-                              .withOpacity(0.4),
-                          border: const Border(
-                            top: BorderSide(
-                              color: Color.fromARGB(255, 114, 114, 114),
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(40),
+                            bottomRight: Radius.circular(40)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 114, 114, 114)
+                                .withOpacity(0.4),
+                            border: const Border(
+                              top: BorderSide(
+                                color: Color.fromARGB(255, 114, 114, 114),
+                              ),
                             ),
                           ),
-                        ),
-                        child:
-                           const InkWell(
-                            child: Row(
+                          child:  InkWell(
+                            onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>  BottomNavigationBarWidget(externalIndex: target,)));},
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   "Start to discover",
-                                  style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                Icon(Icons.arrow_forward_ios, color: Colors.white,size: 16,)
+                                Icon(Icons.arrow_forward_ios,
+                                    color: Colors.white, size: 16),
                               ],
                             ),
                           ),
-                        
+                        ),
                       ),
                     ),
                   ],
