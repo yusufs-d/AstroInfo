@@ -31,7 +31,7 @@ class _LayoutWidgetState extends State<LayoutWidget> {
             ),
           );
         } else if (snapshot.hasData) {
-          return BottomNavigationBarWidget();
+          return const BottomNavigationBarWidget(externalIndex: -1,);
         } else {
           return LoginScreen();
         }

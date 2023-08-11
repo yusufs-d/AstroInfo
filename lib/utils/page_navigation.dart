@@ -7,7 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BottomNavigationBarWidget extends StatefulWidget {
-  const BottomNavigationBarWidget({super.key});
+  const BottomNavigationBarWidget({
+    super.key,
+    required this.externalIndex,
+  });
+  final int externalIndex;
 
   @override
   State<BottomNavigationBarWidget> createState() =>
@@ -15,7 +19,17 @@ class BottomNavigationBarWidget extends StatefulWidget {
 }
 
 class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
+  bool flag = false;
+  void setSelectedIndex(){
+    if(widget.externalIndex == -1){
+      _selectedIndex = 0;
+
+    }else{
+      _selectedIndex = widget.externalIndex;
+    }
+  }
+  
 
   static const List<Widget> _widgetOptions = [
     HomePage(),
@@ -25,9 +39,13 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+        _selectedIndex = index;
+        flag = true;
+      
+      
     });
   }
+
 
   void signOut() {
     FirebaseAuth.instance.signOut();
@@ -35,8 +53,11 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if(!flag){setSelectedIndex();}
+    
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         actions: <Widget>[
           
           TextButton(
@@ -44,11 +65,11 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProfileScreen(),
+                  builder: (context) => const ProfileScreen(),
                 ),
               );
             },
-            child: Icon(
+            child: const Icon(
               Icons.person,
               size: 40,
               color: Color.fromARGB(255, 144, 144, 144),
@@ -95,7 +116,7 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        onTap: _onItemTapped ,
       ),
     );
   }

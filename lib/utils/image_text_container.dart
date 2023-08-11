@@ -35,7 +35,7 @@ class ImageTextContainer extends StatelessWidget {
                 Colors.black.withOpacity(0.5), BlendMode.dstATop),),
           border: Border.all(
               color: const Color.fromARGB(255, 114, 114, 114), width: 2),
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(40),
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),

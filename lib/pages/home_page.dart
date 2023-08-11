@@ -150,6 +150,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   content: "Objects",
+                  target: 1,
                 ),
               ),
               Expanded(
@@ -163,6 +164,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   content: "Articles",
+                  target: 2,
                 ),
               ),
             ],

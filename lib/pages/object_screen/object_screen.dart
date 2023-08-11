@@ -349,6 +349,8 @@ class ObjectPageState extends State<ObjectPage> {
               const SizedBox(
                 height: 20,
               ),
+              Divider(color: Color.fromARGB(255, 114, 114, 114),),
+              SizedBox(height: 20,),
               Container(
                   width: MediaQuery.of(context).size.width - 30,
                   child: Text(

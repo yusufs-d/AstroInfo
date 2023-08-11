@@ -48,47 +48,45 @@ class ProfileScreenState extends State<ProfileScreen> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
-          SizedBox(
-            height: 20,
-          ),
+
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 6,
               ),
-              Text(
+              const Text(
                 "Welcome ",
                 style: TextStyle(color: Colors.white, fontSize: 22),
               ),
               Text(
                 username,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.white,
                     fontSize: 26,
                     fontWeight: FontWeight.bold),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           RectangleImageContainer(
             containerWidth: MediaQuery.of(context).size.width,
             containerHeight: 200,
             title: "Favourite Objects",
-            subtitle: "You have $numberOfFavObjects favourite objects",
+            subtitle: "You have $numberOfFavObjects favourite objects waiting for you !",
             image: Image.network(
                 "https://cdn-icons-png.flaticon.com/512/2240/2240730.png"),
             target: const FavObjectsScreen(),
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           RectangleImageContainer(
             containerWidth: MediaQuery.of(context).size.width,
             containerHeight: 200,
             title: "Favourite Articles",
-            subtitle: "You have $numberOfFavArticles favourite articles",
+            subtitle: "You have $numberOfFavArticles favourite articles waiting for you !",
             image: Image.network(
                 "https://cdn-icons-png.flaticon.com/512/1162/1162292.png"),
             target: const FavArticlesScreen(),
@@ -102,7 +100,7 @@ class ProfileScreenState extends State<ProfileScreen> {
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
-                  const Color.fromARGB(255, 114, 114, 114).withOpacity(0.6),
+                  const Color.fromARGB(255, 114, 114, 114).withOpacity(0.5),
                 ),
               ),
               child: const Row(

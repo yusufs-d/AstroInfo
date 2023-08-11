@@ -44,29 +44,15 @@ class _ExplorePageState extends State<ExplorePage> {
     "blackHole",
     "neutronStar"
   ];
-  
+
+  List<Map<String, dynamic>> selectCategory(String categoryName) {
+    return items.where((object) => object["category"] == categoryName).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    void test() async{
-    CollectionReference users = FirebaseFirestore.instance.collection("Users");
-      users.add({
-        "email":"aa",
-        "username":"bb",
-        "realname":"cc",
-        "numberOfObjectsToRead":  await FirebaseFirestore.instance.collection('SpaceObjects').snapshots().length,
-        "numberOfArticlesToRead":  await FirebaseFirestore.instance.collection('Articles').snapshots().length,
-        "favouriteObjects":[],
-        "favouriteArticles":[],
-      });}
-    
     _readObjectsFromFB();
-    List<Map<String, dynamic>> selectCategory(String categoryName) {
-      return items
-          .where((object) => object["category"] == categoryName)
-          .toList();
-    }
 
-    
     List<String> categories = [
       "All",
       "Planets",
@@ -78,110 +64,113 @@ class _ExplorePageState extends State<ExplorePage> {
     ];
 
     final double w = MediaQuery.of(context).size.width;
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      color: Colors.black,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-                width: w,
-                height: 56,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: categories.length,
-                    itemBuilder: (BuildContext context, index) {
+    return Scaffold(
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: Colors.black,
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(height: 8,),
+              Container(
+                  width: w,
+                  height: 56,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: categories.length,
+                      itemBuilder: (BuildContext context, index) {
+                        return InkWell(
+                          onTap: () {
+                            setState(() {
+                              _tabIndex = index;
+                              if (category_tags[index] == "all") {
+                                objectsToShow = items;
+                              } else {
+                                objectsToShow =
+                                    selectCategory(category_tags[index]);
+                              }
+                            });
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 6),
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: _tabIndex == index
+                                  ? Color.fromARGB(255, 114, 114, 114)
+                                  : Colors.black,
+                              border: Border.all(
+                                  color: Color.fromARGB(255, 114, 114, 114),
+                                  width: 2),
+                              borderRadius: BorderRadius.circular(40),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(categories[index],
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center),
+                              ],
+                            ),
+                          ),
+                        );
+                      })),
+                      SizedBox(height: 8,),
+              Expanded(
+                child: GridView.builder(
+                    itemCount: objectsToShow.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 2.0,
+                      mainAxisSpacing: 2.0,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
                       return InkWell(
                         onTap: () {
-                          setState(() {
-                            _tabIndex = index;
-                            if (category_tags[index] == "all") {
-                              objectsToShow = items;
-                            } else {
-                              objectsToShow =
-                                  selectCategory(category_tags[index]);
-                            }
-                          });
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ObjectPage(
+                                name: objectsToShow[index]["name"],
+                                subtitle: objectsToShow[index]["subtitle"],
+                                content: objectsToShow[index]["content"],
+                                photo: objectsToShow[index]["photo"],
+                                category: objectsToShow[index]["category"],
+                              ),
+                            ),
+                          );
                         },
                         child: Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 6),
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: _tabIndex == index
-                                ? Color.fromARGB(255, 114, 114, 114)
-                                : Colors.black,
-                            border: Border.all(
-                                color: Color.fromARGB(255, 114, 114, 114),
-                                width: 2),
-                            borderRadius: BorderRadius.circular(18),
-                          ),
+                          padding: const EdgeInsets.all(8),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(categories[index],
-                                  style: const TextStyle(
+                              Expanded(
+                                flex: 90,
+                                child: Image.asset(objectsToShow[index]["photo"]),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Expanded(
+                                flex: 10,
+                                child: Text(
+                                  objectsToShow[index]["name"],
+                                  style: GoogleFonts.lato(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center),
+                                ),
+                              )
                             ],
                           ),
                         ),
                       );
-                    })),
-            Expanded(
-              child: GridView.builder(
-                  itemCount: objectsToShow.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 2.0,
-                    mainAxisSpacing: 2.0,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ObjectPage(
-                              name: objectsToShow[index]["name"],
-                              subtitle: objectsToShow[index]["subtitle"],
-                              content: objectsToShow[index]["content"],
-                              photo: objectsToShow[index]["photo"],
-                              category: objectsToShow[index]["category"],
-                            ),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              flex: 90,
-                              child: Image.asset(objectsToShow[index]["photo"]),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Expanded(
-                              flex: 10,
-                              child: Text(
-                                objectsToShow[index]["name"],
-                                style: GoogleFonts.lato(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-            )
-          ],
+                    }),
+              )
+            ],
+          ),
         ),
       ),
     );

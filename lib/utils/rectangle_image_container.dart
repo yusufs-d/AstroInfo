@@ -32,7 +32,7 @@ class RectangleImageContainer extends StatelessWidget {
           border: Border.all(
               color: const Color.fromARGB(255, 114, 114, 114), width: 2),
           
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(40),
         ),
         child: Row(
           children: [
@@ -53,13 +53,13 @@ class RectangleImageContainer extends StatelessWidget {
                 children: [
                 
                     Padding(
-                      padding: const EdgeInsets.only(top: 8),
+                      padding: const EdgeInsets.only(top: 6),
                       child: Row(
                         children: [
                           Text(
                             title,
                             style: GoogleFonts.lato(
-                              textStyle: const TextStyle(color: Colors.white),
+                              textStyle: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
@@ -73,13 +73,15 @@ class RectangleImageContainer extends StatelessWidget {
                       ),
                     ),
                   
-                    Text(
-                      subtitle,
-                      softWrap: true,
-                      style: GoogleFonts.lato(
-                        textStyle: const TextStyle(color: Colors.white),
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6),
+                      child: Text(
+                        subtitle,
+                        style: GoogleFonts.lato(
+                          textStyle: const TextStyle(color: Colors.white),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   

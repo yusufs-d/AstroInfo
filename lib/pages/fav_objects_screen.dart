@@ -99,8 +99,10 @@ class FavObjectsScreenState extends State<FavObjectsScreen> {
         color: Colors.black,
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              SizedBox(
+                height: 8,
+              ),
               Container(
                   width: w,
                   height: 56,
@@ -131,7 +133,7 @@ class FavObjectsScreenState extends State<FavObjectsScreen> {
                               border: Border.all(
                                   color: Color.fromARGB(255, 114, 114, 114),
                                   width: 2),
-                              borderRadius: BorderRadius.circular(18),
+                              borderRadius: BorderRadius.circular(40),
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -146,6 +148,9 @@ class FavObjectsScreenState extends State<FavObjectsScreen> {
                           ),
                         );
                       })),
+              SizedBox(
+                height: 8,
+              ),
               Expanded(
                 child: GridView.builder(
                     itemCount: objectsToShow.length,
