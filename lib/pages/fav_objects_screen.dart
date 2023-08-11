@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'object_page.dart';
+import 'object_screen/object_screen.dart';
 
 class FavObjectsScreen extends StatefulWidget {
   const FavObjectsScreen({super.key});
@@ -166,6 +166,7 @@ class FavObjectsScreenState extends State<FavObjectsScreen> {
                                 subtitle: objectsToShow[index]["subtitle"],
                                 content: objectsToShow[index]["content"],
                                 photo: objectsToShow[index]["photo"],
+                                category: objectsToShow[index]["category"],
                               ),
                             ),
                           );

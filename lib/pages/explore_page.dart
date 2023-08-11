@@ -1,4 +1,4 @@
-import 'package:astro_info/pages/object_page.dart';
+import 'package:astro_info/pages/object_screen/object_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -150,6 +150,7 @@ class _ExplorePageState extends State<ExplorePage> {
                               subtitle: objectsToShow[index]["subtitle"],
                               content: objectsToShow[index]["content"],
                               photo: objectsToShow[index]["photo"],
+                              category: objectsToShow[index]["category"],
                             ),
                           ),
                         );

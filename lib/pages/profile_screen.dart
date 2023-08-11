@@ -78,7 +78,7 @@ class ProfileScreenState extends State<ProfileScreen> {
             title: "Favourite Objects",
             subtitle: "You have $numberOfFavObjects favourite objects",
             image: Image.network(
-                "https://cdn-icons-png.flaticon.com/512/2240/2240744.png"),
+                "https://cdn-icons-png.flaticon.com/512/2240/2240730.png"),
             target: const FavObjectsScreen(),
           ),
           SizedBox(
